@@ -29,13 +29,15 @@ fi
 # To enable new commands, you have to customize Emacs's variable
 # vterm-eval-cmds.
 vterm_cmd() {
-    local vterm_elisp
-    vterm_elisp=""
-    while [ $# -gt 0 ]; do
-        vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
+    local vterm_elisp=''
+
+    while [[ $# -gt 0 ]]; do
+        local curr="${1//\\/\\\\}"
+        vterm_elisp+="\"${curr//\"/\\\"}\" "
         shift
     done
-    vterm_printf "51;E$vterm_elisp"
+
+    vterm_printf "51;E${vterm_elisp}"
 }
 
 # This is to change the title of the buffer based on information provided by the

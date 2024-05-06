@@ -658,13 +658,15 @@ automate the substitution is
 
 ```sh
 vterm_cmd() {
-    local vterm_elisp
-    vterm_elisp=""
-    while [ $# -gt 0 ]; do
-        vterm_elisp="$vterm_elisp""$(printf '"%s" ' "$(printf "%s" "$1" | sed -e 's|\\|\\\\|g' -e 's|"|\\"|g')")"
+    local vterm_elisp=''
+
+    while [[ $# -gt 0 ]]; do
+        local curr="${1//\\/\\\\}"
+        vterm_elisp+="\"${curr//\"/\\\"}\" "
         shift
     done
-    vterm_printf "51;E$vterm_elisp"
+
+    vterm_printf "51;E${vterm_elisp}"
 }
 ```
 
