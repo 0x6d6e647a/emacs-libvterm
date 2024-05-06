@@ -51,7 +51,7 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }"'echo -ne "\033]0;${HOSTNAM
 #
 # The escape sequence "51;A" has also the role of identifying the end of the
 # prompt
-vterm_prompt_end(){
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+vterm_prompt_end() {
+    vterm_printf "51;A$1@$2:$3"
 }
-PS1=$PS1'\[$(vterm_prompt_end)\]'
+PS1+="\\[\$(vterm_prompt_end '\\u' '\\h' '\\w')\\]"

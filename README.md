@@ -595,10 +595,10 @@ PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
 For `bash`, put this at the end of your `.bashrc`:
 
 ```bash
-vterm_prompt_end(){
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+vterm_prompt_end() {
+    vterm_printf "51;A$1@$2:$3"
 }
-PS1=$PS1'\[$(vterm_prompt_end)\]'
+PS1+="\\[\$(vterm_prompt_end '\\u' '\\h' '\\w')\\]"
 ```
 
 For `fish`, put this in your `~/.config/fish/config.fish`:
